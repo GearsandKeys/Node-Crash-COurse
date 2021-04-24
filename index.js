@@ -1,9 +1,14 @@
-const Person = require('./person'); //common JS
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
 
-//we don't use this format, because Node hasn't implemented it yet
-//import Person from './person';
-//You'd have to implement Babel for es6 features
+const server = http.createServer((req, res) => {
+    console.log(req.url);
+    if (req.url === '/'){ // '/' = home
+        res.writeHead(200, { 'Content-Type': 'text/html'})
+        res.end('<h1>Home</h1>');
+    }
+});
 
-const person1 = new Person("joe", 33);
-
-person1.greeting();
+const PORT = process.env.PORT || 5001; //runs on whatever host decides, or 5000 if nothing is selected
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
